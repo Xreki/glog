@@ -1113,7 +1113,7 @@ void LogFileObject::Write(bool force_flush,
        (bytes_since_flush_ >= 1000000) ||
        (CycleClock_Now() >= next_flush_time_) ) {
     FlushUnlocked();
-#ifdef OS_LINUX
+#if defined(OS_LINUX) && !defined(__ANDROID__)
     // Only consider files >= 3MiB
     if (FLAGS_drop_log_memory && file_length_ >= (3 << 20)) {
       // Don't evict the most recent 1-2MiB so as not to impact a tailer
